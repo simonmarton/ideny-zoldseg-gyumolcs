@@ -7,7 +7,12 @@ export default function Home() {
   console.log('does not log on the frontend');
 
   return (
-    <div className={tw`flex flex-col items-center bg-blue-100 gap-6 py-10`}>
+    <div className={tw`flex flex-col h-screen items-center bg-blue-100 gap-6 py-10`}>
+      <div className={tw`absolute left-2 top-2`}>
+        <a href="https://github.com/simonmarton/ideny-zoldseg-gyumolcs" target="_blank" className={tw`underline`}>
+          github
+        </a>
+      </div>
       <h1 className={tw`text-4xl`}>🥦 idény zöldség-gyümölcs 🍉</h1>
 
       <ProduceTable />
