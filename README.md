@@ -1,5 +1,9 @@
 # fresh project
 
+### Live
+
+Available at [ideny-zoldseg-gyumolcs.deno.dev](https://ideny-zoldseg-gyumolcs.deno.dev)
+
 ### Usage
 
 Start the project:
