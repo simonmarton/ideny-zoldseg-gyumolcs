@@ -7,6 +7,14 @@ import { produce } from '../data/byProduce.ts';
 import { closestMonth } from '../utils/date.ts';
 
 const monthNames = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+const colorKeys = ['red', 'yellow', 'green', 'blue', 'indigo', 'purple', 'pink'];
+
+const getColorFromString = (input: string): string => {
+  const idx = [...input].reduce((sum, char) => sum + char.charCodeAt(0), 0);
+
+  const color = colorKeys[idx % colorKeys.length];
+  return `bg-${color}-400`;
+};
 
 export default () => {
   const now = new Date();
@@ -67,7 +75,7 @@ export default () => {
         </label>
       </nav>
 
-      <table className={tw`border-collapse `}>
+      <table className={tw`border-collapse`} style={{ borderSpacing: '0 10px' }}>
         <thead>
           <tr className={tw`sticky top-0`}>
             <th></th>
@@ -78,15 +86,31 @@ export default () => {
         </thead>
         <tbody>
           {filteredProduce.map(({ name, availableMonths }) => (
-            <tr className={tw`py-4 hover:bg-blue-200`}>
-              <td className={tw`py-2 text-right`}>{name}</td>
+            <tr className={tw`py-2 hover:bg-blue-200`}>
+              <td className={tw`py-0 pr-2 text-right`}>{name}</td>
               {availableMonths.map((isAvailable, idx) => {
                 if (currentFilter && !(idx === currentMonth || idx === closeMonth)) {
                   return null;
                 }
+
+                const starting = idx === 0 || !availableMonths[idx - 1];
+                const ending = idx === 11 || !availableMonths[idx + 1];
+
                 return (
-                  <td className={tw`my-2 text-center border-blue-300 ${idx === currentMonth && 'border-x-2'}`}>
-                    {!!isAvailable && '✅'}
+                  <td
+                    className={tw`px-0 py-2 border-gray-400 border-x-1 ${idx === 0 && 'border-l-0'} ${
+                      idx === 11 && 'border-r-0'
+                    }`}
+                  >
+                    <div
+                      className={tw('w-full flex border-0', {
+                        [getColorFromString(name)]: !!isAvailable,
+                        'rounded-l-2xl': starting,
+                        'rounded-r-2xl': ending,
+                      })}
+                    >
+                      &nbsp;
+                    </div>
                   </td>
                 );
               })}
