@@ -2,6 +2,9 @@
 import { h } from 'preact';
 import { useState, useMemo, useReducer } from 'preact/hooks';
 import { tw } from '@twind';
+import { IS_BROWSER } from '$fresh/runtime.ts';
+
+import pwabuilderPwaupdate from 'https://cdn.skypack.dev/@pwabuilder/pwaupdate';
 
 import { produce } from '../data/byProduce.ts';
 import { closestMonth } from '../utils/date.ts';
@@ -20,6 +23,11 @@ export default () => {
   const now = new Date();
   const currentMonth = now.getMonth();
   const closeMonth = closestMonth(now);
+
+  console.log({ IS_BROWSER });
+  if (IS_BROWSER) {
+    navigator.serviceWorker.register('/pwa-sw.js');
+  }
 
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [nameFilter, setNameFilter] = useState('');

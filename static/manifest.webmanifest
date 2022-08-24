@@ -1,12 +1,13 @@
 {
   "name": "ideny zoldseg gyumolcs",
   "short_name": "izgy",
+  "theme_color": "#bada55",
   "background_color": "#0284c7",
   "display": "standalone",
   "icons": [
     {
       "src": "/icon.png",
-      "sizes": "360x360",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],
