@@ -10,6 +10,7 @@ import { produce } from '../data/byProduce.ts';
 import { closestMonth } from '../utils/date.ts';
 
 const monthNames = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+const monthsDefs = monthNames.map((name, idx) => ({ name, short: idx + 1 }));
 const colorKeys = ['red', 'yellow', 'green', 'blue', 'indigo', 'purple', 'pink'];
 
 const getColorFromString = (input: string): string => {
@@ -51,7 +52,7 @@ export default () => {
   );
 
   const firstMonth = Math.min(currentMonth, closeMonth);
-  const filteredMonthNames = monthNames.slice(firstMonth, firstMonth + 2);
+  const filteredMonthsDefs = currentFilter ? monthsDefs.slice(firstMonth, firstMonth + 2) : monthsDefs;
 
   return (
     <div className={tw`flex flex-col gap-1`}>
@@ -87,8 +88,11 @@ export default () => {
         <thead>
           <tr className={tw`sticky top-0`}>
             <th></th>
-            {(currentFilter ? filteredMonthNames : monthNames).map((name) => (
-              <th className={tw`w-12`}>{name}</th>
+            {filteredMonthsDefs.map(({ name, short }) => (
+              <th className={tw`w-12`}>
+                <span className={tw`invisible md:visible`}>{name}</span>
+                <span className={tw`visible md:invisible`}>{short}</span>
+              </th>
             ))}
           </tr>
         </thead>
